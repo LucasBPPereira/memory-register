@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import axios, { AxiosHeaders } from "axios";
+import axios, { AxiosError, AxiosHeaders } from "axios";
 import { BookOpen, Heart, SmilePlus } from "lucide-react";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -11,9 +11,11 @@ export default async function Home() {
     await axios.get(`${process.env.API_URL}/login`, {
       headers: headers() as unknown as AxiosHeaders,
     });
-    
+
   } catch (err) {
-    redirect("/login");
+    if (err instanceof AxiosError) {
+      redirect("/login");
+    }
   }
 
   const horaAtual = new Date().getHours();
