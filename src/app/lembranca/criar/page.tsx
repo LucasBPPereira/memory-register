@@ -1,9 +1,22 @@
-import CriarLemmbrança from "@/components/Form/FormCadastroLembranca";
+import CriarLembrança from "@/components/Form/FormCadastroLembranca";
+import axios, { AxiosHeaders } from "axios";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function PageCriarLembranca() {
+export default async function PageCriarLembranca() {
+    try {
+        await axios.get(`${process.env.API_URL}/reg-lembranca`, {
+          headers: headers() as unknown as AxiosHeaders,
+        });
+    
+      } catch (err) {
+        redirect("/login");
+        if (err) {
+        }
+      }
     return (
         <>
-            <CriarLemmbrança />
+            <CriarLembrança />
         </>
     )
 }

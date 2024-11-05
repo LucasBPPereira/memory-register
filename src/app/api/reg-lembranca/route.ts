@@ -2,18 +2,24 @@
 
 import { PrismaGetInstance } from "@/lib/prisma-pg";
 import { Lembranca } from "@prisma/client";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextResponse } from "next/server";
 
 interface RegLembrancaProps {
   title: string;
   description: string;
-  dateLembranca: string;
+  dateLembranca: Date;
 }
 
 export interface ResLembrancaProps {
     error?: string;
     lembranca: Lembranca;
+}
+
+export async function GET() {
+  const prisma = PrismaGetInstance();
+  const lembranca = await prisma.lembranca.findMany();
+  
+  return NextResponse.json({ lembrancas: lembranca }, { status: 200 });
 }
 
 export async function POST(request: Request) {
@@ -34,7 +40,7 @@ export async function POST(request: Request) {
   try {
     console.log("indo para o cadastro");
     const prisma = PrismaGetInstance();
-    const lembranca = prisma.lembranca.create({
+    const lembranca = await prisma.lembranca.create({
       data: {
         title,
         description,
@@ -47,15 +53,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ lembranca }, { status: 200 });
   } catch (err) {
-    console.log("falhou");
+    console.log("falhou", err);
     
-    if (err instanceof PrismaClientKnownRequestError) {
-        if (err.code === "P2002") {
-            return NextResponse.json(
-                { error: "user already exists" }, 
-                { status: 400 }
-            )
-        }
-    }
+
   }
 }

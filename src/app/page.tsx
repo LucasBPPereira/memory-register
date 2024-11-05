@@ -1,3 +1,4 @@
+import DarkMode from "@/components/DarkMode";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import axios, { AxiosHeaders } from "axios";
 import { BookOpen, Heart, SmilePlus } from "lucide-react";
@@ -28,7 +29,10 @@ export default async function Home() {
     cumprimento = "boa tarde!"
   }
   return (
-    <div className="flex w-full h-screen items-center justify-center">
+    <div className="flex flex-col w-full h-screen items-center justify-center">
+      <div className="mb-5">
+        <DarkMode />
+      </div>
       <Card>
         <CardHeader>
           <CardTitle className="text-center mb-2">
