@@ -31,3 +31,11 @@ model Sessions {
   createdAt DateTime @default(now())
   User      User     @relation(fields: [userId], references: [id])
 }
+
+model Lembranca {
+  id            String   @id @default(cuid())
+  title         String
+  description   String
+  dateLembranca DateTime
+  createdAt     DateTime @default(now())
+}

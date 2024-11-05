@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import axios, { AxiosError, AxiosHeaders } from "axios";
+import axios, { AxiosHeaders } from "axios";
 import { BookOpen, Heart, SmilePlus } from "lucide-react";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -13,8 +13,8 @@ export default async function Home() {
     });
 
   } catch (err) {
-    if (err instanceof AxiosError) {
-      redirect("/login");
+    redirect("/login");
+    if (err) {
     }
   }
 
