@@ -174,13 +174,13 @@ const config = {
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "POSTGRES_URL",
+        "fromEnvVar": "POSTGRES_PRISMA_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider        = \"prisma-client-js\"\n  previewFeatures = [\"driverAdapters\"]\n  output          = \"./generated/client\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"POSTGRES_URL\")\n  directUrl = env(\"POSTGRES_URL_NON_POOLING\") // uses a direct connection\n}\n\nmodel User {\n  id       String     @id @default(cuid())\n  email    String     @unique\n  password String\n  Sessions Sessions[]\n}\n\nmodel Sessions {\n  id        String   @id @default(cuid())\n  userId    String\n  token     String\n  expiresAt DateTime\n  valid     Boolean\n  createdAt DateTime @default(now())\n  User      User     @relation(fields: [userId], references: [id])\n}\n\nmodel Lembranca {\n  id            String   @id @default(cuid())\n  title         String\n  description   String\n  dateLembranca DateTime\n  createdAt     DateTime @default(now())\n}\n",
-  "inlineSchemaHash": "f71e57a1d984ff9189f4b5be65d7cacd9a0d9b2d7591ca27fdf3888989db8d95",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider        = \"prisma-client-js\"\n  previewFeatures = [\"driverAdapters\"]\n  output          = \"./generated/client\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"POSTGRES_PRISMA_URL\")\n  directUrl = env(\"POSTGRES_URL_NON_POOLING\") // uses a direct connection\n}\n\nmodel User {\n  id       String     @id @default(cuid())\n  email    String     @unique\n  password String\n  Sessions Sessions[]\n}\n\nmodel Sessions {\n  id        String   @id @default(cuid())\n  userId    String\n  token     String\n  expiresAt DateTime\n  valid     Boolean\n  createdAt DateTime @default(now())\n  User      User     @relation(fields: [userId], references: [id])\n}\n\nmodel Lembranca {\n  id            String   @id @default(cuid())\n  title         String\n  description   String\n  dateLembranca DateTime\n  createdAt     DateTime @default(now())\n}\n",
+  "inlineSchemaHash": "eedf111d129d19761d1998b845923bb67ae2682ce6107714357865847b3eea87",
   "copyEngine": true
 }
 config.dirname = '/'
@@ -198,7 +198,7 @@ config.engineWasm = {
 
 config.injectableEdgeEnv = () => ({
   parsed: {
-    POSTGRES_URL: typeof globalThis !== 'undefined' && globalThis['POSTGRES_URL'] || typeof process !== 'undefined' && process.env && process.env.POSTGRES_URL || undefined
+    POSTGRES_PRISMA_URL: typeof globalThis !== 'undefined' && globalThis['POSTGRES_PRISMA_URL'] || typeof process !== 'undefined' && process.env && process.env.POSTGRES_PRISMA_URL || undefined
   }
 })
 
