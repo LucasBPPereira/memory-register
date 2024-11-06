@@ -76,7 +76,7 @@ export default function CriarLembrança() {
     console.log(form.getValues("dateLembranca"));
 
     try {
-      await axios.post("/api/reg-lembranca", {
+      await axios.post(`${process.env.API_URL}/api/reg-lembranca`, {
         title: form.getValues("title"),
         description: form.getValues("description"),
         dateLembranca: form.getValues("dateLembranca"),

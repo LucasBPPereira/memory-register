@@ -39,7 +39,7 @@ export default function Login() {
 
   const handleSubmitLogin = async (values: UserRegisterSchema) => {
     try {
-      await axios.post("/api/login", {
+      await axios.post(`${process.env.API_URL}/api/login`, {
         email: form.getValues("email"),
         password1: form.getValues("password1"),
       });
