@@ -1,6 +1,5 @@
 "use client";
 
-import { RegisterResponse } from "@/app/api/register/route";
 import DarkMode from "@/components/DarkMode";
 import { Button } from "@/components/ui/button";
 import {
@@ -59,7 +58,7 @@ export default function CadastroForm() {
 
     const handleSubmitForm = async (values: UserRegisterSchema) => {
         try {
-            await axios.post<RegisterResponse>("/api/register", {
+            await axios.post("/api/register", {
                 email: form.getValues("email"),
                 password1: form.getValues("password1"),
                 password2: form.getValues("password2")

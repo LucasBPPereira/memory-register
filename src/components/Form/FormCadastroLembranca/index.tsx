@@ -4,7 +4,6 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-import { ResLembrancaProps } from "@/app/api/reg-lembranca/route";
 import DarkMode from "@/components/DarkMode";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -77,7 +76,7 @@ export default function CriarLembrança() {
     console.log(form.getValues("dateLembranca"));
 
     try {
-      await axios.post<ResLembrancaProps>("/api/reg-lembranca", {
+      await axios.post("/api/reg-lembranca", {
         title: form.getValues("title"),
         description: form.getValues("description"),
         dateLembranca: form.getValues("dateLembranca"),

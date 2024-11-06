@@ -13,10 +13,6 @@ interface LoginProps {
     password2: string;
 }
 
-export interface LoginResponse {
-    session: string;
-}
-
 export async function GET() {
     
     const authCookie = cookies().get("auth-session");
@@ -44,7 +40,7 @@ export async function POST(request: Request) {
     
 
     if (!email || !password1) {
-        return NextResponse.json<LoginResponse>(
+        return NextResponse.json(
             { session: "" }, 
             { status: 400 }
         )
@@ -64,7 +60,7 @@ export async function POST(request: Request) {
         const passwordResult = bcrypt.compareSync(password1, userPass);
 
         if (!passwordResult) {
-            return NextResponse.json<LoginResponse>(
+            return NextResponse.json(
                 { session: "" }, 
                 { status: 400 }
             )
@@ -99,7 +95,7 @@ export async function POST(request: Request) {
     } catch (err) {
         console.log(err);
         
-        return NextResponse.json<LoginResponse>(
+        return NextResponse.json(
             { session: "" }, 
             { status: 400 }
         )

@@ -2,7 +2,6 @@
 
 import { GenerateSession } from "@/lib/generate-session";
 import { PrismaGetInstance } from "@/lib/prisma-pg";
-import { User } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import bcrypt from "bcrypt";
 import { addHours } from "date-fns";
@@ -13,11 +12,6 @@ interface RegisterProps {
     email: string;
     password1: string;
     password2: string;
-}
-
-export interface RegisterResponse {
-    error?: string;
-    user? : User;
 }
 
 export async function POST(request: Request) {

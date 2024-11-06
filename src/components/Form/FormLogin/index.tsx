@@ -1,6 +1,5 @@
 "use client";
 
-import { LoginResponse } from "@/app/api/login/route";
 import DarkMode from "@/components/DarkMode";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,7 +39,7 @@ export default function Login() {
 
   const handleSubmitLogin = async (values: UserRegisterSchema) => {
     try {
-      await axios.post<LoginResponse>("/api/login", {
+      await axios.post("/api/login", {
         email: form.getValues("email"),
         password1: form.getValues("password1"),
       });
