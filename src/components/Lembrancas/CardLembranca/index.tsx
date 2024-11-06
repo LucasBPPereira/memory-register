@@ -25,7 +25,7 @@ export default function CardLembranca() {
   // Função para buscar lembranças com filtro por título
   const fetchLembrancas = async (title?: string) => {
     try {
-      const response = await axios.get(`${process.env.API_URL}/api/reg-lembranca`, {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/reg-lembranca`, {
         params: { title }
       });
       if (response.status === 200 && response.data.lembrancas) {

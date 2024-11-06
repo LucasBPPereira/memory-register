@@ -4,37 +4,38 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
+import { ResRegLembrancaProps } from "@/app/api/reg-lembranca/route";
 import DarkMode from "@/components/DarkMode";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
@@ -76,7 +77,7 @@ export default function CriarLembrança() {
     console.log(form.getValues("dateLembranca"));
 
     try {
-      await axios.post(`${process.env.API_URL}/api/reg-lembranca`, {
+      await axios.post<ResRegLembrancaProps>(`${process.env.NEXT_PUBLIC_API_URL}/api/reg-lembranca`, {
         title: form.getValues("title"),
         description: form.getValues("description"),
         dateLembranca: form.getValues("dateLembranca"),

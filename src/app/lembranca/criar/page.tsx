@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 export default async function PageCriarLembranca() {
     try {
-        await axios.get(`${process.env.API_URL}/api/reg-lembranca`, {
+        await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/reg-lembranca`, {
           headers: headers() as unknown as AxiosHeaders,
         });
     

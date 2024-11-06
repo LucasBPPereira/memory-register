@@ -1,12 +1,18 @@
 "use server";
 
 import { PrismaGetInstance } from "@/lib/prisma-pg";
+import { Lembranca } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 interface RegLembrancaProps {
   title: string;
   description: string;
   dateLembranca: Date;
+}
+
+export interface ResRegLembrancaProps {
+  error: string;
+  lembranca: Lembranca;
 }
 
 export async function GET(request: Request) {
