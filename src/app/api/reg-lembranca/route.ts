@@ -11,15 +11,22 @@ interface RegLembrancaProps {
 }
 
 export interface ResLembrancaProps {
-    error?: string;
-    lembranca: Lembranca;
+  error?: string;
+  lembranca: Lembranca;
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   const prisma = PrismaGetInstance();
-  const lembranca = await prisma.lembranca.findMany();
-  
-  return NextResponse.json({ lembrancas: lembranca }, { status: 200 });
+  const url = new URL(request.url);
+  const title = url.searchParams.get("title") || undefined;
+
+  const lembrancas = await prisma.lembranca.findMany({
+    where: {
+      ...(title && { title: { contains: title, mode: "insensitive" } }), // Filtra pelo título
+    },
+  });
+
+  return NextResponse.json({ lembrancas }, { status: 200 });
 }
 
 export async function POST(request: Request) {
@@ -28,7 +35,6 @@ export async function POST(request: Request) {
 
   console.log("verificacao");
   console.log(body);
-  
 
   if (!title || !description || !dateLembranca) {
     return NextResponse.json(
@@ -49,12 +55,9 @@ export async function POST(request: Request) {
     });
 
     console.log("lembrança criada");
-    
 
     return NextResponse.json({ lembranca }, { status: 200 });
   } catch (err) {
     console.log("falhou", err);
-    
-
   }
 }
