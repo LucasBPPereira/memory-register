@@ -2,11 +2,11 @@
 
 import { GenerateSession } from "@/lib/generate-session";
 import { PrismaGetInstance } from "@/lib/prisma-pg";
+import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { addHours } from "date-fns";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { User } from "../../../../prisma/generated/client";
 
 interface LoginProps {
     email: string;
