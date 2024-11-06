@@ -1,7 +1,7 @@
 "use server";
 
 import { PrismaGetInstance } from "@/lib/prisma-pg";
-import type { Lembranca } from "@prisma/client";
+import { Lembranca } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 interface RegLembrancaProps {
