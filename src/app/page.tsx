@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 export default async function Home() {
 
   try {
-    await axios.get(`${process.env.API_URL}/login`, {
+    await axios.get(`${process.env.API_URL}/api/login`, {
       headers: headers() as unknown as AxiosHeaders,
     });
 

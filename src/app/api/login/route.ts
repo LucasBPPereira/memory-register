@@ -6,11 +6,17 @@ import bcrypt from "bcrypt";
 import { addHours } from "date-fns";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { User } from "../../../../prisma/generated/client";
 
 interface LoginProps {
     email: string;
     password1: string;
     password2: string;
+}
+
+export interface ResponseLoginProps {
+    error: string;
+    user: User;
 }
 
 export async function GET() {
