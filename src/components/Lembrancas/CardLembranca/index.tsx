@@ -67,6 +67,19 @@ export default function CardLembranca() {
     setSelectedLembranca(null);
   };
 
+  const onDeleteLemb = async (id: string) => {
+    try {
+      // Enviamos o ID no corpo da requisição DELETE
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/reg-lembranca`, { data: { id } });
+  
+      // Após sucesso, removemos a lembrança do estado para atualizar a interface
+      setLembrancas((prevLembrancas) => prevLembrancas.filter((lembranca) => lembranca.id !== id));
+    } catch (err) {
+      console.error("Erro ao deletar lembrança:", err);
+      setError("Não foi possível deletar a lembrança.");
+    }
+  };
+
   if (error) {
     return <p className="text-red-500">{error}</p>;
   }
@@ -90,9 +103,9 @@ export default function CardLembranca() {
               <CardHeader className="relative">
                 <CardTitle>
                   <span className="pl-2">{lembranca.title}</span>
-                  <span className="bg-rose-100 px-4 py-2 rounded-lg border-2 border-rose-900 text-rose-500 absolute right-3 top-4">
-                    Sentimento
-                  </span>
+                  <Button onClick={() => onDeleteLemb(lembranca.id)} className="bg-rose-100 px-2 py-1 rounded-lg border-2 border-rose-900 text-rose-500 absolute right-3 top-4">
+                    Deletar
+                  </Button>
                 </CardTitle>
                 <p className="flex items-center px-2 py-1">
                   <CalendarIcon className="mr-2 h-4 w-4" />

@@ -32,13 +32,32 @@ export async function GET() {
         },
     });
 
-    if (!session || !session.valid || session.expiresAt < new Date()) NextResponse.json({ status: 401 });
+    if (!session || !session.valid || session.expiresAt < new Date()) {
+        // Expire a sessão e retorne um status de não autorizado
+        cookies().delete("auth-session"); // Remove o cookie se a sessão estiver expirada
+        return NextResponse.json({ error: "Sessão expirada" }, { status: 401 });
+      }
 
     return NextResponse.json({}, { status: 200 });
 
 }
 
+async function invalidateExpiredSessions() {
+    const prisma = PrismaGetInstance();
+    
+    await prisma.sessions.updateMany({
+      where: {
+        expiresAt: { lt: new Date() },
+        valid: true
+      },
+      data: { valid: false }
+    });
+  }
+  
+
 export async function POST(request: Request) {
+    await invalidateExpiredSessions();
+
     const body = await request.json() as LoginProps;
 
     const { email, password1 } = body;

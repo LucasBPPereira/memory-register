@@ -61,3 +61,17 @@ export async function POST(request: Request) {
     console.log("falhou", err);
   }
 }
+
+export async function DELETE(request: Request) {
+  const { id } = await request.json();
+  const prisma = PrismaGetInstance();
+
+  try {
+    // Realiza a exclusão no banco de dados usando o ID recebido
+    await prisma.lembranca.delete({ where: { id } });
+    return NextResponse.json({ message: "Lembrança deletada com sucesso" }, { status: 200 });
+  } catch (error) {
+    console.error("Erro ao deletar lembrança:", error);
+    return NextResponse.json({ error: "Erro ao deletar lembrança" }, { status: 500 });
+  }
+}

@@ -1,32 +1,38 @@
 import DarkMode from "@/components/DarkMode";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import axios, { AxiosHeaders } from "axios";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import axios, { AxiosError, AxiosHeaders } from "axios";
 import { BookOpen, Heart, SmilePlus } from "lucide-react";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-
   try {
-    await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
+    await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
       headers: headers() as unknown as AxiosHeaders,
     });
-
   } catch (err) {
-    redirect("/login");
-    if (err) {
+    if (err instanceof AxiosError) {
+      if (err.response?.status === 401) {
+        redirect("/login");
+      }
     }
   }
 
   const horaAtual = new Date().getHours();
-  let cumprimento = ""
+  let cumprimento = "";
   if (horaAtual >= 18) {
     cumprimento = "boa noite.";
   } else if (horaAtual > 6 && horaAtual < 12) {
-    cumprimento = "bom dia!"
+    cumprimento = "bom dia!";
   } else {
-    cumprimento = "boa tarde!"
+    cumprimento = "boa tarde!";
   }
   return (
     <div className="flex flex-col w-full h-screen items-center justify-center">
@@ -52,7 +58,7 @@ export default async function Home() {
               </div>
             </Link>
           </div>
-          <div >
+          <div>
             <Link href="/lembranca">
               <div className="group flex flex-col gap-7 cursor-pointer h-28 w-36 px-4 py-2 border border-input bg-background shadow-sm hover:bg-blue-50 hover:text-blue-800 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
                 <BookOpen className="group-hover:stroke-blue-700" />
@@ -60,7 +66,6 @@ export default async function Home() {
               </div>
             </Link>
           </div>
-
         </CardContent>
       </Card>
     </div>
